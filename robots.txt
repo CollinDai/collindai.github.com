@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://CollinDai.github.com/sitemap.xml 
