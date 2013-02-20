@@ -4,7 +4,7 @@
   <title><![CDATA[Peike Dai's BLOG]]></title>
   <link href="http://CollinDai.github.com/atom.xml" rel="self"/>
   <link href="http://CollinDai.github.com/"/>
-  <updated>2013-02-20T15:51:28-05:00</updated>
+  <updated>2013-02-20T17:41:16-05:00</updated>
   <id>http://CollinDai.github.com/</id>
   <author>
     <name><![CDATA[Peike Dai]]></name>
@@ -14,20 +14,58 @@
 
   
   <entry>
+    <title type="html"><![CDATA[中文编码问题]]></title>
+    <link href="http://CollinDai.github.com/blog/2013/02/20/chinese-encode-problem/"/>
+    <updated>2013-02-20T17:14:00-05:00</updated>
+    <id>http://CollinDai.github.com/blog/2013/02/20/chinese-encode-problem</id>
+    <content type="html"><![CDATA[<p>在用octopress写中文时遇到了问题：</p>
+
+<pre><code>YAML Exception reading 2012-11-23-rise-of-the-guardians.markdown: invalid byte sequence in GBK
+</code></pre>
+
+<p>经查找是中文的句号引起的。
+<a href="http://www.v2ex.com/t/26027">这里</a>说</p>
+
+<blockquote><ol>
+<li>markdown文件如果出现了中文请另存为UTF-8格式且去掉BOM头。</li>
+<li>yaml的冒号后要有空格。</li>
+<li>把设置环境变量里的zh_CN改成en_US。</li>
+</ol>
+</blockquote>
+
+<!--more-->
+
+
+<p>根据我的经验，yaml里的冒号后无空格报的不是这个错。于是我先尝试了&#8221;UTF-8 without BOM&#8221;编码，直接用Notepad++转换。结果还是报这个错，然后我又尝试了修改环境变量。Windows7右键计算机->属性->高级系统设置->环境变量。在“系统变量”那一栏中新建两个变量<code>LANG</code>和<code>LC_ALL</code>,都设置为<code>en_US.UTF-8</code>。再尝试generate果然就没报错了。
+不知道<code>LANG</code>和<code>LC_ALL</code>是什么变量，但估计是linux里用的。</p>
+
+<p>对了，文件名也不能用中文，也就是说博客的网址里只有显示英文。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Google Glass]]></title>
+    <link href="http://CollinDai.github.com/blog/2013/02/20/exciting-new-tech/"/>
+    <updated>2013-02-20T16:35:00-05:00</updated>
+    <id>http://CollinDai.github.com/blog/2013/02/20/exciting-new-tech</id>
+    <content type="html"><![CDATA[<p>下面是一段Google Glass最新的演示视频.</p>
+
+<!--more-->
+
+
+
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/v1uyQZNg2vE "></iframe></div>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[stay curious]]></title>
     <link href="http://CollinDai.github.com/blog/2013/02/19/stay-curious/"/>
     <updated>2013-02-19T16:41:00-05:00</updated>
     <id>http://CollinDai.github.com/blog/2013/02/19/stay-curious</id>
     <content type="html"><![CDATA[<p><a href="http://staycurious.tk">http://staycurious.tk</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Thailand!]]></title>
-    <link href="http://CollinDai.github.com/blog/2012/12/23/thailand/"/>
-    <updated>2012-12-23T20:24:00-05:00</updated>
-    <id>http://CollinDai.github.com/blog/2012/12/23/thailand</id>
-    <content type="html"><![CDATA[
 ]]></content>
   </entry>
   
@@ -45,15 +83,15 @@
 
 <p>(READ: About the time Hugh Jackman hugged TIME&#8217;s Joel Stein)</p>
 
-<p>But the usual suspects aren&#8217;t enough. Pitch is desperate for attention��supposedly no one believes in the boogeyman anymore, although the popularity of the Paranormal Activity series would suggest otherwise��and begins to cast a dark mood over children everywhere. The Man in the Moon recommends the Guardians add reinforcements in the form of mischief-maker Jack Frost (Chris Pine). He&#8217;s a surprise choice; the kids don&#8217;t believe in Jack Frost, if they&#8217;ve ever heard of him. Poor Jack. If he&#8217;s lucky, maybe he&#8217;ll get a mention from a mom instructing her kid to put on a coat, lest Jack Frost nip at his or her nose or fingers and toes. Enter the reluctant fifth Guardian; the Hulk in this kiddie version of The Avengers.</p>
+<p>But the usual suspects aren&#8217;t enough. Pitch is desperate for attention—supposedly no one believes in the boogeyman anymore, although the popularity of the Paranormal Activity series would suggest otherwise—and begins to cast a dark mood over children everywhere. The Man in the Moon recommends the Guardians add reinforcements in the form of mischief-maker Jack Frost (Chris Pine). He&#8217;s a surprise choice; the kids don&#8217;t believe in Jack Frost, if they&#8217;ve ever heard of him. Poor Jack. If he&#8217;s lucky, maybe he&#8217;ll get a mention from a mom instructing her kid to put on a coat, lest Jack Frost nip at his or her nose or fingers and toes. Enter the reluctant fifth Guardian; the Hulk in this kiddie version of The Avengers.</p>
 
 <p>Pitch&#8217;s first nefarious act is to steal all the teeth collected by Tooth and capture all her little tooth minions, making it impossible for her to continue to collect baby teeth in the interim. On North&#8217;s mega globe, the lights representing belief immediately begin to go out. Without cash for canines, faith is no more. And it&#8217;s April, so Bunny is the next threatened Guardian.</p>
 
 <p>(READ: Mary Pols&#8217; review of Isla Fisher&#8217;s Bachelorette)</p>
 
-<p>There is cinematic precedent for Santa hanging with the other representatives of all  major holidays involving gifts, candy or money. He had some dealings with the ��Council of Legendary Figures�� in the Santa Clause movies, including all of the above plus Mother Nature, Father Time and Cupid. Jack Frost was the outsider in that scheme as well (Martin Short played him as a saboteur in Santa Clause 3). In Norse legends Jokul Frosti was downright dangerous. In this incarnation he&#8217;s about 12 years-old, a barefoot sprite with grey hair, cute and kind of like a miniature Richard Gere. Jack is bound to be a hit with boys in the audience, especially after Rise of the Guardian&#8217;s best sequence, in which Jack takes a still-believing boy sledding at top speed through quintessential small-town America. The character feels fresh and new, re-imagined as someone kids can relate to and ultimately (no spoilers) proves to have a bittersweet back story. On his own, Jack could carry a movie. Instead the movie, directed by Peter Ramsey, a longtime art department guy making his feature film debut, grinds through various machinations to make Jack a member of this fraternity. As for the business of having the Tooth Fairy develop a crush on Jack, simpering while she paws at him? Creepy and no way to protect childhood innocence. (I&#8217;d take Dwayne ��The Rock�� Johnson in a tutu over this twit any day.)</p>
+<p>There is cinematic precedent for Santa hanging with the other representatives of all  major holidays involving gifts, candy or money. He had some dealings with the “Council of Legendary Figures” in the Santa Clause movies, including all of the above plus Mother Nature, Father Time and Cupid. Jack Frost was the outsider in that scheme as well (Martin Short played him as a saboteur in Santa Clause 3). In Norse legends Jokul Frosti was downright dangerous. In this incarnation he&#8217;s about 12 years-old, a barefoot sprite with grey hair, cute and kind of like a miniature Richard Gere. Jack is bound to be a hit with boys in the audience, especially after Rise of the Guardian&#8217;s best sequence, in which Jack takes a still-believing boy sledding at top speed through quintessential small-town America. The character feels fresh and new, re-imagined as someone kids can relate to and ultimately (no spoilers) proves to have a bittersweet back story. On his own, Jack could carry a movie. Instead the movie, directed by Peter Ramsey, a longtime art department guy making his feature film debut, grinds through various machinations to make Jack a member of this fraternity. As for the business of having the Tooth Fairy develop a crush on Jack, simpering while she paws at him? Creepy and no way to protect childhood innocence. (I&#8217;d take Dwayne “The Rock” Johnson in a tutu over this twit any day.)</p>
 
-<p>Joyce&#8217;s Guardian series takes place 300 years prior to the action in this story, which was written and tailored specifically for the movie, is old fashioned and beautifully illustrated, and some of that translates to screen. Tooth and her minions, depicted as pretty little hummingbirds, could be the realization of the great illustrator Arthur Rackham. But the Sandman, drawn to look like an amber-colored Pikachu and giving off the sunny glow of Harpo Marx, is a dud. And his presence feels unnatural, especially without any reference to his current obscurity. The movie depicts Jack Frost as being forgotten by the current generation, but come on, the Sandman? While Pat Ballard&#8217;s song from 1954, with its lyrics ��bring me a dream�� prolonged in the Sandman mythology, we&#8217;re two generations removed from Sandman days. Modern children tend go to sleep to the sounds of whales or white noise, with nary a mention of the Sandman.</p>
+<p>Joyce&#8217;s Guardian series takes place 300 years prior to the action in this story, which was written and tailored specifically for the movie, is old fashioned and beautifully illustrated, and some of that translates to screen. Tooth and her minions, depicted as pretty little hummingbirds, could be the realization of the great illustrator Arthur Rackham. But the Sandman, drawn to look like an amber-colored Pikachu and giving off the sunny glow of Harpo Marx, is a dud. And his presence feels unnatural, especially without any reference to his current obscurity. The movie depicts Jack Frost as being forgotten by the current generation, but come on, the Sandman? While Pat Ballard&#8217;s song from 1954, with its lyrics “bring me a dream” prolonged in the Sandman mythology, we&#8217;re two generations removed from Sandman days. Modern children tend go to sleep to the sounds of whales or white noise, with nary a mention of the Sandman.</p>
 
 <p>(READ: How much TIME&#8217;s critic loved the Star Trek reboot starring Chris Pine)</p>
 

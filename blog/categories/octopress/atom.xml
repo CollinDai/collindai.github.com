@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: octopress | Peike Dai's BLOG]]></title>
+  <link href="http://CollinDai.github.com/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://CollinDai.github.com/"/>
+  <updated>2013-02-20T17:41:16-05:00</updated>
+  <id>http://CollinDai.github.com/</id>
+  <author>
+    <name><![CDATA[Peike Dai]]></name>
+    <email><![CDATA[dpk1216@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[中文编码问题]]></title>
+    <link href="http://CollinDai.github.com/blog/2013/02/20/chinese-encode-problem/"/>
+    <updated>2013-02-20T17:14:00-05:00</updated>
+    <id>http://CollinDai.github.com/blog/2013/02/20/chinese-encode-problem</id>
+    <content type="html"><![CDATA[<p>在用octopress写中文时遇到了问题：</p>
+
+<pre><code>YAML Exception reading 2012-11-23-rise-of-the-guardians.markdown: invalid byte sequence in GBK
+</code></pre>
+
+<p>经查找是中文的句号引起的。
+<a href="http://www.v2ex.com/t/26027">这里</a>说</p>
+
+<blockquote><ol>
+<li>markdown文件如果出现了中文请另存为UTF-8格式且去掉BOM头。</li>
+<li>yaml的冒号后要有空格。</li>
+<li>把设置环境变量里的zh_CN改成en_US。</li>
+</ol>
+</blockquote>
+
+<!--more-->
+
+
+<p>根据我的经验，yaml里的冒号后无空格报的不是这个错。于是我先尝试了"UTF-8 without BOM"编码，直接用Notepad++转换。结果还是报这个错，然后我又尝试了修改环境变量。Windows7右键计算机->属性->高级系统设置->环境变量。在“系统变量”那一栏中新建两个变量<code>LANG</code>和<code>LC_ALL</code>,都设置为<code>en_US.UTF-8</code>。再尝试generate果然就没报错了。
+不知道<code>LANG</code>和<code>LC_ALL</code>是什么变量，但估计是linux里用的。</p>
+
+<p>对了，文件名也不能用中文，也就是说博客的网址里只有显示英文。</p>
+]]></content>
+  </entry>
+  
+</feed>

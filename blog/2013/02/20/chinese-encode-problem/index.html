@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: tech - Peike Dai's BLOG</title>
+  <title>中文编码问题 - Peike Dai's BLOG</title>
   <meta name="author" content="Peike Dai">
 
   
-  <meta name="description" content="Category: tech">
+  <meta name="description" content="在用octopress写中文时遇到了问题： YAML Exception reading 2012-11-23-rise-of-the-guardians.markdown: invalid byte sequence in GBK 经查找是中文的句号引起的。
+这里说 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://CollinDai.github.com/blog/categories/tech/">
+  <link rel="canonical" href="http://CollinDai.github.com/blog/2013/02/20/chinese-encode-problem/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -75,36 +76,114 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Tech</h1>
+    
+      <h1 class="entry-title">中文编码问题</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-20T17:14:00-05:00" pubdate data-updated="true">Feb 20<span>th</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>在用octopress写中文时遇到了问题：</p>
 
-  
-  <h2>2013</h2>
+<pre><code>YAML Exception reading 2012-11-23-rise-of-the-guardians.markdown: invalid byte sequence in GBK
+</code></pre>
 
-<article>
-  
-<h1><a href="/blog/2013/02/20/exciting-new-tech/">Google Glass</a></h1>
-<time datetime="2013-02-20T16:35:00-05:00" pubdate><span class='month'>Feb</span> <span class='day'>20</span> <span class='year'>2013</span></time>
+<p>经查找是中文的句号引起的。
+<a href="http://www.v2ex.com/t/26027">这里</a>说</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/tech/'>tech</a></span>
-</footer>
+<blockquote><ol>
+<li>markdown文件如果出现了中文请另存为UTF-8格式且去掉BOM头。</li>
+<li>yaml的冒号后要有空格。</li>
+<li>把设置环境变量里的zh_CN改成en_US。</li>
+</ol>
+</blockquote>
+
+<!--more-->
 
 
-</article>
+<p>根据我的经验，yaml里的冒号后无空格报的不是这个错。于是我先尝试了&#8221;UTF-8 without BOM&#8221;编码，直接用Notepad++转换。结果还是报这个错，然后我又尝试了修改环境变量。Windows7右键计算机->属性->高级系统设置->环境变量。在“系统变量”那一栏中新建两个变量<code>LANG</code>和<code>LC_ALL</code>,都设置为<code>en_US.UTF-8</code>。再尝试generate果然就没报错了。
+不知道<code>LANG</code>和<code>LC_ALL</code>是什么变量，但估计是linux里用的。</p>
 
+<p>对了，文件名也不能用中文，也就是说博客的网址里只有显示英文。</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Peike Dai</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-20T17:14:00-05:00" pubdate data-updated="true">Feb 20<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/octopress/'>octopress</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://CollinDai.github.com/blog/2013/02/20/chinese-encode-problem/" data-via="dpk1216" data-counturl="http://CollinDai.github.com/blog/2013/02/20/chinese-encode-problem/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/20/exciting-new-tech/" title="Previous Post: Google Glass">&laquo; Google Glass</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -205,7 +284,10 @@
       var disqus_shortname = 'peike';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://CollinDai.github.com/blog/2013/02/20/chinese-encode-problem/';
+        var disqus_url = 'http://CollinDai.github.com/blog/2013/02/20/chinese-encode-problem/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
