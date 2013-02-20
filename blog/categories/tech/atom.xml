@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Tech | Peike Dai]]></title>
+  <link href="http://CollinDai.github.com/blog/categories/tech/atom.xml" rel="self"/>
+  <link href="http://CollinDai.github.com/"/>
+  <updated>2012-11-23T12:43:45-05:00</updated>
+  <id>http://CollinDai.github.com/</id>
+  <author>
+    <name><![CDATA[Peike Dai]]></name>
+    <email><![CDATA[dpk1216@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[First Octopress blog]]></title>
+    <link href="http://CollinDai.github.com/blog/2012/11/23/first-octopress-blog/"/>
+    <updated>2012-11-23T12:12:00-05:00</updated>
+    <id>http://CollinDai.github.com/blog/2012/11/23/first-octopress-blog</id>
+    <content type="html"><![CDATA[<p>Nothing but test</p>
+]]></content>
+  </entry>
+  
+</feed>

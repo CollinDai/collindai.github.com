@@ -1,15 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
+
+        <loc>http://CollinDai.github.com/blog/2012/11/23/first-octopress-blog/</loc>
+        <lastmod>2012-11-23T12:15:22-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://CollinDai.github.com/blog/2012/11/23/rise-of-the-guardians/</loc>
+        <lastmod>2012-11-23T12:43:45-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://CollinDai.github.com/about.html</loc>
+        <lastmod>2012-11-23T12:32:22-05:00</lastmod>
+    </url>
+    <url>
         <loc>http://CollinDai.github.com/blog/archives/</loc>
-        <lastmod>2013-02-19T17:46:54-05:00</lastmod>
+        <lastmod>2012-11-23T12:43:45-05:00</lastmod>
     </url>
     <url>
         <loc>http://CollinDai.github.com/</loc>
-        <lastmod>2013-02-19T17:46:54-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://CollinDai.github.com/robots.txt</loc>
-        <lastmod>2013-02-19T17:46:53-05:00</lastmod>
+        <lastmod>2012-11-23T12:43:45-05:00</lastmod>
     </url>
 </urlset>
