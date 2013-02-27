@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: octopress | Peike Dai's BLOG]]></title>
+  <title><![CDATA[Category: octopress | Peike]]></title>
   <link href="http://CollinDai.github.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://CollinDai.github.com/"/>
-  <updated>2013-02-20T23:11:37-05:00</updated>
+  <updated>2013-02-27T16:17:50-05:00</updated>
   <id>http://CollinDai.github.com/</id>
   <author>
     <name><![CDATA[Peike Dai]]></name>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Algorithm | Peike]]></title>
+  <link href="http://CollinDai.github.com/blog/categories/algorithm/atom.xml" rel="self"/>
+  <link href="http://CollinDai.github.com/"/>
+  <updated>2013-02-27T16:17:50-05:00</updated>
+  <id>http://CollinDai.github.com/</id>
+  <author>
+    <name><![CDATA[Peike Dai]]></name>
+    <email><![CDATA[dpk1216@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[找零问题]]></title>
+    <link href="http://CollinDai.github.com/blog/2013/02/26/changing-money/"/>
+    <updated>2013-02-26T16:09:00-05:00</updated>
+    <id>http://CollinDai.github.com/blog/2013/02/26/changing-money</id>
+    <content type="html"><![CDATA[<p>先来看一下题目：</p>
+
+<blockquote><p>How many ways can you make change for n cents, using only pennies (1 cent), nickles (5 cents), dimes (10 cents) and quarters (25 cents)?</p></blockquote>
+
+<p>第一反应：面额从大到小进行遍历。第二反应是DP，因为可以看出来，依次遍历会产很多重复计算。不过先来看一下遍历的算法。</p>
+
+<h3>遍历</h3>
+
+<p>四种面额，四层循环。每层的循环边界是剩余金额可用最多此面额的个数:<code>i&lt;remain/[denomination]</code>。每次凑够n，<code>ways</code>就加一，代码如下。</p>
+
+<p><div><script src='https://gist.github.com/5045154.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+<p>问题很明显，太多的重复运算。并且，遍历这种运算很不直观，很多变量需要极其小心，不然就会出错。而且很多的重复代码，对于这种问题，递归是更好的选择。</p>
+
+<h3>递归</h3>
+
+<p>接下来尝试递归。先忘掉之前的思路，用递归的思想来想。对任意的金额n，其找零方式无非是由四种方式组成，n-25的金额再添一个quarter，n-10的金额再添一个dime，n-5的金额再添一个nickle，和n-1的金额再添一个penny，代码如下。</p>
+
+<p><div><script src='https://gist.github.com/5045397.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+<p>比之前的遍历直观了许多。其实递归的的特点就是直观，在看代码时把函数内部调用的函数不看成是自己，看成是另外不同的函数就行，只是名字一样。只需要关注函数的返回值是什么即可。但是！这代码有BUG！</p>
+
+<pre><code>1-&gt;1
+2-&gt;1
+...
+5-&gt;2
+6-&gt;3
+</code></pre>
+
+<p>在6的时候出现了问题，6 cents找零本应只有2种办法可是输出了3。原来程序把1 penny，1 nickle和1 nickle，1 penny算成了两种。而且，此方法计算n=100时的时间已经让人无法接受。
+解决这个问题可以加上面额选择的顺序。每种金额的找零方法就是这金额减去面额a<sub>k</sub>的值所需要的方法数，加上原金额不用面额a<sub>k</sub>找零的方法数，代码如下：</p>
+
+<p><div><script src='https://gist.github.com/5049071.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+<p>需要注意的是递归运算需要进行一些优化才能达到最佳的运行效率。尽管不能和动态规划相比，但当输入值不太大时（比如10<sup>18</sup>），优化过的递归还是有相当理想的效率的。
+比如此算法里当<code>k=0</code>时，总是只有一种方法，就是全部都用penny。而上面的算法里每次都得运算到<code>remain==0</code>才会结束，也就是说，每5个数字里，除去可以被5整除的，和被5整除余1的，剩下3个数都属于重复运算。所以添加一个或条件，当<code>k==0</code>时，也返回1，这样便优化掉了3/5的运算。此优化已经添加到了以上代码中。
+至此，此递归算法可以毫秒时间里算出100cents可以用到的找零方式。</p>
+
+<h3>动态规划</h3>
+
+<p>使用动态规划解决问题的关键是找到一个有许多共同子问题的父问题，这样就可以把将算过的子问题存到table,下次再遇到此子问题，就可以直接O(1)时间返回。
+之前递归的算法尽管经过优化，仍存在大量的重复的运算。
+然而，在使用动态规划分析这道题时遇到了困难。通过存储子问题的方式来运算总是无法得到正确的答案。代码如下。</p>
+
+<p><code>java
+if (remain &lt; 0 || k &lt; 0) return 0;
+else if (ways[remain] != 0) return ways[remain];
+else if (remain == 0) return 1;
+else {
+  ways[remain] = makeChange(remain, k-1) + makeChange(remain-types[k], k);
+  return ways[remain];
+}
+</code>
+看似合理，考虑了各面额的顺序，但在remain=10时便开始出错。尝试了诸多办法均无法解决，也不觉得有什么微小的BUG，于是意识到可能这问题不满足使用动态规划<a href="http://baike.baidu.com/view/28146.htm#8">前提</a>：最优化原理和无后效性。</p>
+
+<ul>
+<li><strong>最优化原理(optimal substructure)：</strong>一个最优化策略的子策略总是最优的。比如u,v为一个图中两点，且从u到v存在最短路径p，如果w也在p上，则p也是w到v和w到u的最短路径。</li>
+<li><strong>无后效性(no after-effect)：</strong>某阶段的状态一旦确定，则此后过程的演变不再受此前各种状态及决策的影响，简单的说，就是“未来与过去无关”，当前的状态是此前历史的一个完整总结。</li>
+</ul>
+
+
+<p>对于此问题，首先所求的并非是最优解，而是所有可能的解。所以如果用求最优解的方式来求所有解，可能会出现一些不可预料的问题。并且，如果说是求最少coin数，则也是简单的贪心算法问题，而不是动态规划问题。再之，对于后效性，此问题也并非是简单的完全没有后效性，因为例如n=10的子问题包括n=0，n=5，和n=9。</p>
+
+<p>所以这道题最容易的解法应该是递归，或者迭代，而不是动态规划。但此题也不是不能用动态规划来解，需要用到另外一个知识：<strong>Generating Function</strong>(<a href="http://baike.baidu.com/view/2415279.htm">生成函数</a>)。
+更详细的解释请看<a href="http://www.blindrut.ca/~neitsch/math/talks/m496pres1.nb.pdf">这里</a>。</p>
+]]></content>
+  </entry>
+  
+</feed>
