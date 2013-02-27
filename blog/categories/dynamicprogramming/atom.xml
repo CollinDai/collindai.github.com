@@ -4,7 +4,7 @@
   <title><![CDATA[Category: DynamicProgramming | Peike]]></title>
   <link href="http://CollinDai.github.com/blog/categories/dynamicprogramming/atom.xml" rel="self"/>
   <link href="http://CollinDai.github.com/"/>
-  <updated>2013-02-27T17:03:29-05:00</updated>
+  <updated>2013-02-27T17:06:59-05:00</updated>
   <id>http://CollinDai.github.com/</id>
   <author>
     <name><![CDATA[Peike Dai]]></name>
@@ -21,6 +21,9 @@
     <content type="html"><![CDATA[<p>先来看一下题目：</p>
 
 <blockquote><p>How many ways can you make change for n cents, using only pennies (1 cent), nickles (5 cents), dimes (10 cents) and quarters (25 cents)?</p></blockquote>
+
+<!--more-->
+
 
 <p>第一反应：面额从大到小进行遍历。第二反应是DP，因为可以看出来，依次遍历会产很多重复计算。不过先来看一下遍历的算法。</p>
 
