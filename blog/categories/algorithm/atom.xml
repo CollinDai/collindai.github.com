@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | Peike]]></title>
   <link href="http://CollinDai.github.com/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://CollinDai.github.com/"/>
-  <updated>2013-02-27T17:06:59-05:00</updated>
+  <updated>2013-03-01T18:20:41-05:00</updated>
   <id>http://CollinDai.github.com/</id>
   <author>
     <name><![CDATA[Peike Dai]]></name>
@@ -12,6 +12,163 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Eight Queens Puzzle]]></title>
+    <link href="http://CollinDai.github.com/blog/2013/03/01/eight-queens-puzzle/"/>
+    <updated>2013-03-01T17:08:00-05:00</updated>
+    <id>http://CollinDai.github.com/blog/2013/03/01/eight-queens-puzzle</id>
+    <content type="html"><![CDATA[<p>问题如下：</p>
+
+<blockquote><p>Write an algorithm to print the number of ways of arranging eight queens on an 8*8 chess board so that non of them share the same row, column or diagonal.</p></blockquote>
+
+<!--more-->
+
+
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/1/1f/Eight-queens-animation.gif"></p>
+
+<p>这是个典型的递归题，因为有很多重复的运算。初步思路，逐行或者逐列放棋。我选择逐列放，（上图为<a href="http://en.wikipedia.org/wiki/Eight_queens_puzzle#Animation_of_the_recursive_solution">wikipedia</a>的逐行放棋的动画），每次放棋便disable了三条路：此棋向右上路线，此棋正右路线，和此棋向右下路线。于是，初步递归代码如下：</p>
+
+<p>```java
+public static void putQ(int col) {
+  if (col == 8) { // index超过7，说明8行摆满，则得到一个方法</p>
+
+<pre><code>ways++;
+return;
+</code></pre>
+
+<p>  }
+  for (int r=0; r&lt;8; ++r) {</p>
+
+<pre><code>if (availability[r][col] == 0) {
+  disable(r,col); // disable (r, col) 右边的三条路
+  putQ(col+1); // 放下一列
+}
+</code></pre>
+
+<p>  }
+}
+<code>
+此时遇到第一个问题：有可能走到某列时没有一个格子可以放，便需要返回，上一步递归选下一个可放的格子。可此时上次放格子所disable的格子没有enable。这样比如我走到第6列发现没格子放了，我返回第五列放下格时，上格造成的disable还存在。所以必须在每次发现没格子放时enable此次的格子。于是我把`putQ`的返回值改成了`boolean`，然后改动了下面几行：
+</code>java
+boolean canput = false;
+for (int r=0; r&lt;8; ++r) {
+  if (availability[r][col] == 0) {</p>
+
+<pre><code>canput = true;
+disable(r,col); 
+if (!putQ(col+1))
+  enable(r,col);
+</code></pre>
+
+<p>  }
+}
+if (!canput) // 8行走完发现没格子放
+  return false;
+```</p>
+
+<p>但这样就遇到了第二个问题，成功放好8列后要寻找下一个放法时，也需要enable之前的格子。所以，其实无论有没有格子放，每尝试放某一行的下一行时，都要把此行带来的disable的格子给解锁。于是代码应该是这样：
+```java
+for (int r=0; r&lt;8; ++r) {
+  if (availability[r][col] == 0) {</p>
+
+<pre><code>disable(r,col); 
+putQ(col+1)
+enable(r,col);
+</code></pre>
+
+<p>  }
+}
+if (!canput) // 8行走完发现没格子放
+  return false;
+<code>``
+</code>disable<code>函数和</code>enable<code>函数很相似，所以可以写成一个</code>setAvblt`。</p>
+
+<p>```java
+static void setAvblt(int r, int c, int avail) {
+  for (int i=1; i&lt;8; ++i) {</p>
+
+<pre><code>if (r+i &lt; 8 &amp;&amp; c+i &lt; 8) {
+  availability[r+i][c+i]+=avail;
+}
+if (r-i &gt;= 0 &amp;&amp; c+i &lt; 8) {
+  availability[r-i][c+i]+=avail;
+}
+if (c+i &lt; 8)
+  availability[r][c+i]+=avail;
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>而在<code>putQ</code>
+```java
+for (int r=0; r&lt;8; ++r) {
+  if (availability[r][col] == 0) {</p>
+
+<pre><code>setAvblt(r,col, 1); // 格子availability+1如果在某个Queen攻击范围内
+putQ(col+1)
+setAvblt(r,col, -1); // 格子availability-1如果移走某个Queen。
+                     // 格子可放旗子如果availability为0
+</code></pre>
+
+<p>  }
+}
+```
+最后代码如下：</p>
+
+<p>```java
+class QueenBoard {
+  static int[][] availability = new int[8][8];
+  static int ways = 0;</p>
+
+<p>  static void setAvblt(int r, int c, int avail) {</p>
+
+<pre><code>for (int i=1; i&lt;8; ++i) {
+  if (r+i &lt; 8 &amp;&amp; c+i &lt; 8) {
+    availability[r+i][c+i]+=avail;
+  }
+  if (r-i &gt;= 0 &amp;&amp; c+i &lt; 8) {
+    availability[r-i][c+i]+=avail;
+  }
+  if (c+i &lt; 8)
+    availability[r][c+i]+=avail;
+}
+</code></pre>
+
+<p>  }</p>
+
+<p>  public static void putQ(int col) {</p>
+
+<pre><code>if (col == 8) {
+  ways++;
+  return;
+}
+for (int r=0; r&lt;8; ++r) {
+  if (availability[r][col] == 0) {
+    setAvblt(r,col, 1);
+    putQ(col+1);
+    setAvblt(r,col, -1);
+  }
+}
+</code></pre>
+
+<p>  }</p>
+
+<p>  public static void main(String[] argv) {</p>
+
+<pre><code>putQ(0);
+System.out.println(ways);
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>Cracking 150是列出所有方法而不是计算放法数量。只需要在用个<code>Integer[]</code>或者每次保存旗子放在某列的哪一行，然后basic base里，即当<code>col == 8</code>时，加入<code>ArrayList&lt;Integer[]&gt;</code>则可，改动不大。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[找零问题]]></title>
