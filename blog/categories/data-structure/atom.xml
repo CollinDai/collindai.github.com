@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: algorithm | Peike]]></title>
-  <link href="http://CollinDai.github.com/blog/categories/algorithm/atom.xml" rel="self"/>
+  <title><![CDATA[Category: data_structure | Peike]]></title>
+  <link href="http://CollinDai.github.com/blog/categories/data-structure/atom.xml" rel="self"/>
   <link href="http://CollinDai.github.com/"/>
   <updated>2013-03-22T11:03:36-04:00</updated>
   <id>http://CollinDai.github.com/</id>

@@ -4,7 +4,7 @@
   <title><![CDATA[Peike]]></title>
   <link href="http://CollinDai.github.com/atom.xml" rel="self"/>
   <link href="http://CollinDai.github.com/"/>
-  <updated>2013-03-01T18:20:41-05:00</updated>
+  <updated>2013-03-22T11:03:36-04:00</updated>
   <id>http://CollinDai.github.com/</id>
   <author>
     <name><![CDATA[Peike Dai]]></name>
@@ -12,6 +12,17 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[字符串处理【0】]]></title>
+    <link href="http://CollinDai.github.com/blog/2013/03/06/common-longest-questions/"/>
+    <updated>2013-03-06T20:55:00-05:00</updated>
+    <id>http://CollinDai.github.com/blog/2013/03/06/common-longest-questions</id>
+    <content type="html"><![CDATA[<p>字符串处理问题里有很多种最长问题：最长相同子字符串，最长连续序列，最长回文，尽管都称为最长，但其解法确实不尽相同。不过，有一种强大的数据结构可以用来解决所有这些字符串问题，这种数据结构叫做suffix tree.</p>
+
+<p>因为很强大，所以比一般的binary tree什么的复杂了许多。我自己就花了很长时间来学习。但各个最长问题都有其自己的不用suffix tree的解法。所以，在接下来几篇post里，会依次introduce各问题的用数据结构的解法，和不用数据结构的解法。希望这个系列能彻底让我搞定字符串处理的问题。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Eight Queens Puzzle]]></title>
