@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>字符串处理【1】- 回文 - Peike</title>
+  <meta name="author" content="Peike Dai">
+
+  
+  <meta name="description" content="回文(Palindrome)是一个平时开发不怎么会遇到，但面试时经常会被问到的一个问题。所谓回文，意思是一串字符或数字正读和反着读都是相同的。比如abcba, 11111。回文因其解法的多样性常被用来考察应聘者的能力，针对回文也可以问出各种各样的问题。 初级：判断是否是回文 给一个字符串或数字， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://CollinDai.github.com/blog/2013/03/22/palindrome/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Peike" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=Raleway:100" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic|Istok+Web:400,400italic,700,700italic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38674342-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+  <div id="header-container">
+    <div id="header">
+      <div class="wrapper">
+        <header role="banner"><hgroup>
+  <h1><a href="/">Peike</a></h1>
+</hgroup>
+
+</header>
+        <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:CollinDai.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+      </div>
+    </div>
+  </div>
+  <div id="body"   >
+    <div id="main">
+      <div id="content">
+	<div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">字符串处理【1】- 回文</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-22T11:07:00-04:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>回文(Palindrome)是一个平时开发不怎么会遇到，但面试时经常会被问到的一个问题。所谓回文，意思是一串字符或数字正读和反着读都是相同的。比如<code>abcba</code>, <code>11111</code>。回文因其解法的多样性常被用来考察应聘者的能力，针对回文也可以问出各种各样的问题。</p>
+
+<h3>初级：判断是否是回文</h3>
+
+<p>给一个字符串或数字，判断其是否是回文。数字处理要稍微比字符串麻烦些，不过和高级的找回文想必就简单了许多。</p>
+
+<!--more-->
+
+
+<h4>初级初期：字符串</h4>
+
+<p>两种思路，从字符串中间往两端依次比较，或者从两端往中间依次比较。从中间往两端的话还得考虑奇数偶数的问题，所以选择两端往中间比较稍微容易些。
+给定字符串<code>str</code>, 用<code>left</code>,<code>right</code>表示左右两个字符的index，当满足<code>left&lt;right</code>时，如果<code>str[left]</code>不等于<code>str[right]</code>，则不是回文。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">boolean</span> <span class="nf">isPalindrome</span><span class="o">(</span><span class="kt">char</span><span class="o">[]</span> <span class="n">input</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">(</span><span class="n">input</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">input</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">boolean</span> <span class="n">ispalindrome</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="o">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">left</span><span class="o">;</span> <span class="n">left</span><span class="o">&lt;</span><span class="n">right</span><span class="o">;</span> <span class="n">left</span><span class="o">++,</span> <span class="n">right</span><span class="o">--)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">input</span><span class="o">[</span><span class="n">left</span><span class="o">]</span> <span class="o">!=</span> <span class="n">input</span><span class="o">[</span><span class="n">right</span><span class="o">])</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">ispalindrome</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">ispalindrome</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>初级中期：数字</h4>
+
+<p>数字要麻烦些是因为没法像字符串那样对每一位的数字提出来进行比较。不过可以先转成字符串再像上面那样，所以多了一行代码：</p>
+
+<pre><code>java:
+char[] input = String.valueOf(numberinput).toCharArray();
+</code></pre>
+
+<h4>初级巅峰：不允许使用额外空间</h4>
+
+<p>有可能面试官会要求不允许使用额外的空间，意思是不准你把整数转成字符串来做。这样就只能依靠计算得出数字来比较了。基本方法是</p>
+
+<ol>
+<li>先找到数字一共多少位</li>
+<li>然后取最高位<code>h</code>和最低位<code>l</code>比较，如果不相等就不是回文，如果相等就把这两位从原数字中去掉。</li>
+<li>重复第二步知道原数字被消到0</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isPalindromeNumber</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">len</span><span class="o">=</span><span class="mi">0</span><span class="o">,</span> <span class="n">origin</span>  <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+</span><span class='line'>  <span class="c1">// 计算位数</span>
+</span><span class='line'>  <span class="k">do</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">len</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span> <span class="k">while</span> <span class="o">((</span><span class="n">origin</span> <span class="o">/=</span> <span class="mi">10</span><span class="o">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">origin</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+</span><span class='line'>  <span class="k">do</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="n">origin</span> <span class="o">/</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">Math</span><span class="o">.</span><span class="na">pow</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span><span class="n">len</span><span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">origin</span> <span class="o">%</span> <span class="mi">10</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">left</span> <span class="o">!=</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="c1">// 消去头尾</span>
+</span><span class='line'>    <span class="n">origin</span> <span class="o">=</span> <span class="o">(</span><span class="n">origin</span> <span class="o">%</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">Math</span><span class="o">.</span><span class="na">pow</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span><span class="n">len</span><span class="o">-</span><span class="mi">1</span><span class="o">))</span> <span class="o">/</span> <span class="mi">10</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">len</span> <span class="o">-=</span> <span class="mi">2</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span> <span class="k">while</span> <span class="o">(</span><span class="n">origin</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>高级：寻找最长回文</h3>
+
+<p>先假定给的是字符串，第一反应，遍历所有的子字符串，然后用初级方法来判断是不是，是的话就选最长。可以看出这种方法复杂度是O(n<sup>3</sup>)，因为一共有o(n<sup>2</sup>)的子字符串，而判断回文又需要o(n)的时间。所以我们寻求更少复杂度的方法。通过上网Google可知还有o(n<sup>2</sup>)和o(n)的方法，既然有o(n)的方法我们就不用去学o(n<sup>2</sup>)的方法了。不过o(n)的方法并不是很直观，我看了一整天才看明白。</p>
+
+<h4>1. preprocess</h4>
+
+<p>因为字符串可偶可奇，统统一来就转换成奇数会使计算方便许多。方法是用&#8221;#&#8221;把字符分隔开：</p>
+
+<pre><code>abcde -&gt; #a#b#c#d#e#
+</code></pre>
+
+<p>因为字符数变成了<code>n + n+1 = 2n + 1</code>所以肯定是奇数</p>
+
+<h4>2. 处理</h4>
+
+<p>用p[i]来记录字符串第i个（从0开始算）字符作为回文边缘到中心长度。</p>
+
+<pre><code>str = "#a#b#c#d#e#";
+str[1] = "a";
+p[1] = 2; // "#a#"
+str[5] = "#"; // after "b"
+p[5] = 1; "b#"
+</code></pre>
+
+<p>用从中心向两端扩张的方式来判断回文，从最左端开始遍历，如果就这样一个一个遍历到最右端的话复杂度是o(n<sup>2</sup>)，最慢时间会出现在&#8221;bbbbbb&#8221;这样的字符串上。作了一个巧妙的优化使复杂度可以达到o(n)。</p>
+
+<pre><code>str = "#a#b#c#b#a#"; // this is a palindrome
+p[5] = 6; // this is the center of this palindrome;
+p[4] == p[6] = 1;
+p[3] == p[7] = 2;
+p[2] == p[8] = 1;
+p[1] == p[9] = 2;
+</code></pre>
+
+<p>这里有一个对称的性质：对于某个<code>str[center]</code>，如果确定是回文中心了，设这个回文右边沿（左右都一样，这里用右）到中心的值<code>p[center] = m</code>，对于某个<code>center &lt; a &lt; center + m</code>（即a在center右边但没超过边沿），如果其<code>p[a] + a &lt;= p[center] + m</code>（即a为中心的回文没有超过center为中心的回文），那么<code>p[a] == p[2*center - a]</code>（即a关于center的对称点），可以简要称为：长回文内部，短回文关于长回文中心对称。</p>
+
+<p>这样的话，一旦找到个稍微长点的回文的中点，它右边的几个点的回文长度都可以求出来了。当走过了长回文边沿时，再继续用从中心往两端扩张的方式来判断即可。</p>
+
+<p>最后的最后，再从<code>p[i]</code>里找出最长即可。如果想返回最长回文字符串而不是长度，把i代回去再扩张一次也很快。</p>
+
+<p>最终代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="n">String</span> <span class="nf">longestPalindrome</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">newlen</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">+</span> <span class="mi">2</span><span class="o">;</span>
+</span><span class='line'>  <span class="kt">int</span><span class="o">[]</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">newlen</span><span class="o">];</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">mx</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>  <span class="n">String</span> <span class="n">newstr</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">newstr</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">mx</span> <span class="o">&gt;</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">p</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">id</span> <span class="o">-</span> <span class="n">i</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">mx</span> <span class="o">-</span> <span class="n">i</span> <span class="o">?</span> <span class="n">p</span><span class="o">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">id</span> <span class="o">-</span> <span class="n">i</span><span class="o">]</span> <span class="o">:</span> <span class="n">mx</span> <span class="o">-</span> <span class="n">i</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">p</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">p</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">newstr</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">p</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">newstr</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">p</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">==</span> <span class="n">newstr</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">p</span><span class="o">[</span><span class="n">i</span><span class="o">]))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">p</span><span class="o">[</span><span class="n">i</span><span class="o">]++;</span>
+</span><span class='line'>      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">p</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">mx</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">mx</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">p</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+</span><span class='line'>      <span class="n">id</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">maxi</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">newlen</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">p</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">max</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">max</span> <span class="o">=</span> <span class="n">p</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+</span><span class='line'>      <span class="n">maxi</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">String</span> <span class="n">outstr</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">maxi</span> <span class="o">-</span> <span class="o">(</span><span class="n">max</span> <span class="o">-</span> <span class="mi">2</span><span class="o">);</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">maxi</span> <span class="o">+</span> <span class="n">max</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">outstr</span> <span class="o">+=</span> <span class="n">newstr</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="n">outstr</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Reference：</h4>
+
+<p><a href="http://www.felix021.com/blog/read.php?2040">http://www.felix021.com/blog/read.php?2040</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Peike Dai</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-22T11:07:00-04:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/interview/'>interview</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://CollinDai.github.com/blog/2013/03/22/palindrome/" data-via="" data-counturl="http://CollinDai.github.com/blog/2013/03/22/palindrome/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/03/06/common-longest-questions/" title="Previous Post: 字符串处理【0】">&laquo; 字符串处理【0】</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/03/22/palindrome/">字符串处理【1】- 回文</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/06/common-longest-questions/">字符串处理【0】</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/01/eight-queens-puzzle/">Eight Queens Puzzle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/26/changing-money/">找零问题</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/20/chinese-encode-problem/">中文编码问题</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+      </div>
+    </div>
+    <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Peike Dai -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>. Design by <a href="http://octopressthemes.com">Octopress Themes</a>.</span>
+</p>
+
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'peike';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://CollinDai.github.com/blog/2013/03/22/palindrome/';
+        var disqus_url = 'http://CollinDai.github.com/blog/2013/03/22/palindrome/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+  </div>
+</body>
+</html>

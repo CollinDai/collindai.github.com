@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: interview | Peike]]></title>
+  <link href="http://CollinDai.github.com/blog/categories/interview/atom.xml" rel="self"/>
+  <link href="http://CollinDai.github.com/"/>
+  <updated>2013-03-22T16:00:44-04:00</updated>
+  <id>http://CollinDai.github.com/</id>
+  <author>
+    <name><![CDATA[Peike Dai]]></name>
+    <email><![CDATA[dpk1216@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[字符串处理【1】- 回文]]></title>
+    <link href="http://CollinDai.github.com/blog/2013/03/22/palindrome/"/>
+    <updated>2013-03-22T11:07:00-04:00</updated>
+    <id>http://CollinDai.github.com/blog/2013/03/22/palindrome</id>
+    <content type="html"><![CDATA[<p>回文(Palindrome)是一个平时开发不怎么会遇到，但面试时经常会被问到的一个问题。所谓回文，意思是一串字符或数字正读和反着读都是相同的。比如<code>abcba</code>, <code>11111</code>。回文因其解法的多样性常被用来考察应聘者的能力，针对回文也可以问出各种各样的问题。</p>
+
+<h3>初级：判断是否是回文</h3>
+
+<p>给一个字符串或数字，判断其是否是回文。数字处理要稍微比字符串麻烦些，不过和高级的找回文想必就简单了许多。</p>
+
+<!--more-->
+
+
+<h4>初级初期：字符串</h4>
+
+<p>两种思路，从字符串中间往两端依次比较，或者从两端往中间依次比较。从中间往两端的话还得考虑奇数偶数的问题，所以选择两端往中间比较稍微容易些。
+给定字符串<code>str</code>, 用<code>left</code>,<code>right</code>表示左右两个字符的index，当满足<code>left&lt;right</code>时，如果<code>str[left]</code>不等于<code>str[right]</code>，则不是回文。</p>
+
+<p>```java
+boolean isPalindrome(char[] input) {
+  if (input == null || input.length == 0) {</p>
+
+<pre><code>return false;
+</code></pre>
+
+<p>  } else {</p>
+
+<pre><code>boolean ispalindrome = true;
+for (int left=0, right = input.length-1-left; left&lt;right; left++, right--) {
+  if (input[left] != input[right]) {
+    ispalindrome = false;
+    break;
+  }
+}
+return ispalindrome;
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<h4>初级中期：数字</h4>
+
+<p>数字要麻烦些是因为没法像字符串那样对每一位的数字提出来进行比较。不过可以先转成字符串再像上面那样，所以多了一行代码：</p>
+
+<pre><code>java:
+char[] input = String.valueOf(numberinput).toCharArray();
+</code></pre>
+
+<h4>初级巅峰：不允许使用额外空间</h4>
+
+<p>有可能面试官会要求不允许使用额外的空间，意思是不准你把整数转成字符串来做。这样就只能依靠计算得出数字来比较了。基本方法是</p>
+
+<ol>
+<li>先找到数字一共多少位</li>
+<li>然后取最高位<code>h</code>和最低位<code>l</code>比较，如果不相等就不是回文，如果相等就把这两位从原数字中去掉。</li>
+<li>重复第二步知道原数字被消到0</li>
+</ol>
+
+
+<p>```java
+public boolean isPalindromeNumber(int x) {
+  if (x &lt; 0) {</p>
+
+<pre><code>return false;
+</code></pre>
+
+<p>  }
+  int len=0, origin  = x;
+  // 计算位数
+  do {</p>
+
+<pre><code>len += 1;
+</code></pre>
+
+<p>  } while ((origin /= 10) > 0);
+  origin = x;
+  do {</p>
+
+<pre><code>int left = origin / (int)Math.pow(10,len-1);
+int right = origin % 10;
+if (left != right) {
+  return false;
+}
+// 消去头尾
+origin = (origin % (int) Math.pow(10,len-1)) / 10;
+len -= 2;
+</code></pre>
+
+<p>  } while (origin > 0);
+  return true;
+}
+```</p>
+
+<h3>高级：寻找最长回文</h3>
+
+<p>先假定给的是字符串，第一反应，遍历所有的子字符串，然后用初级方法来判断是不是，是的话就选最长。可以看出这种方法复杂度是O(n<sup>3</sup>)，因为一共有o(n<sup>2</sup>)的子字符串，而判断回文又需要o(n)的时间。所以我们寻求更少复杂度的方法。通过上网Google可知还有o(n<sup>2</sup>)和o(n)的方法，既然有o(n)的方法我们就不用去学o(n<sup>2</sup>)的方法了。不过o(n)的方法并不是很直观，我看了一整天才看明白。</p>
+
+<h4>1. preprocess</h4>
+
+<p>因为字符串可偶可奇，统统一来就转换成奇数会使计算方便许多。方法是用"#"把字符分隔开：</p>
+
+<pre><code>abcde -&gt; #a#b#c#d#e#
+</code></pre>
+
+<p>因为字符数变成了<code>n + n+1 = 2n + 1</code>所以肯定是奇数</p>
+
+<h4>2. 处理</h4>
+
+<p>用p[i]来记录字符串第i个（从0开始算）字符作为回文边缘到中心长度。</p>
+
+<pre><code>str = "#a#b#c#d#e#";
+str[1] = "a";
+p[1] = 2; // "#a#"
+str[5] = "#"; // after "b"
+p[5] = 1; "b#"
+</code></pre>
+
+<p>用从中心向两端扩张的方式来判断回文，从最左端开始遍历，如果就这样一个一个遍历到最右端的话复杂度是o(n<sup>2</sup>)，最慢时间会出现在"bbbbbb"这样的字符串上。作了一个巧妙的优化使复杂度可以达到o(n)。</p>
+
+<pre><code>str = "#a#b#c#b#a#"; // this is a palindrome
+p[5] = 6; // this is the center of this palindrome;
+p[4] == p[6] = 1;
+p[3] == p[7] = 2;
+p[2] == p[8] = 1;
+p[1] == p[9] = 2;
+</code></pre>
+
+<p>这里有一个对称的性质：对于某个<code>str[center]</code>，如果确定是回文中心了，设这个回文右边沿（左右都一样，这里用右）到中心的值<code>p[center] = m</code>，对于某个<code>center &lt; a &lt; center + m</code>（即a在center右边但没超过边沿），如果其<code>p[a] + a &lt;= p[center] + m</code>（即a为中心的回文没有超过center为中心的回文），那么<code>p[a] == p[2*center - a]</code>（即a关于center的对称点），可以简要称为：长回文内部，短回文关于长回文中心对称。</p>
+
+<p>这样的话，一旦找到个稍微长点的回文的中点，它右边的几个点的回文长度都可以求出来了。当走过了长回文边沿时，再继续用从中心往两端扩张的方式来判断即可。</p>
+
+<p>最后的最后，再从<code>p[i]</code>里找出最长即可。如果想返回最长回文字符串而不是长度，把i代回去再扩张一次也很快。</p>
+
+<p>最终代码如下：</p>
+
+<p>```java
+public String longestPalindrome(String s) {
+  int newlen = 2 * s.length() + 2;
+  int[] p = new int[newlen];
+  int mx = 0, id = 0;
+  String newstr = preproc(s);
+  for (int i = 1; i &lt; newstr.length(); ++i) {</p>
+
+<pre><code>if (mx &gt; i) {
+  p[i] = p[2 * id - i] &lt; mx - i ? p[2 * id - i] : mx - i;
+} else {
+  p[i] = 1;
+}
+while (i + p[i] &lt; newstr.length() &amp;&amp; (i - p[i] &gt;= 0)) {
+  if (newstr.charAt(i + p[i]) == newstr.charAt(i - p[i])) {
+    p[i]++;
+  } else {
+    break;
+  }
+}
+if (i + p[i] &gt; mx) {
+  mx = i + p[i];
+  id = i;
+}
+</code></pre>
+
+<p>  }</p>
+
+<p>  int max = 0, maxi = 0;
+  for (int i = 0; i &lt; newlen; ++i) {</p>
+
+<pre><code>if (p[i] &gt; max) {
+  max = p[i];
+  maxi = i;
+}
+</code></pre>
+
+<p>  }</p>
+
+<p>  String outstr = "";
+  for (int i = maxi - (max - 2); i &lt; maxi + max - 1; i += 2) {</p>
+
+<pre><code>outstr += newstr.substring(i, i + 1);
+</code></pre>
+
+<p>  }</p>
+
+<p>  return outstr;
+}
+```</p>
+
+<h4>Reference：</h4>
+
+<p><a href="http://www.felix021.com/blog/read.php?2040">http://www.felix021.com/blog/read.php?2040</a></p>
+]]></content>
+  </entry>
+  
+</feed>
